@@ -2,22 +2,18 @@
 
 [bore](https://github.com/ekzhang/bore) ported to Go.
 
-## Why ported to Go ?
+## Why Go ?
 
 Just for learning.
 
 ## And what go-bore brings?
 
-- lower memory footprint
-- similar lattency and throughput
+- lower memory footprint 
+- higher throughput
 
-## Benchmark
-
-TODO
-
+It's ture. Simple Go code can beat simple Rust code.
 
 ## Why ?
 
 1. `io.Copy` utlize `splice` to minimize memory copies
-2.  
-
+2.  ...

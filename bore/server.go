@@ -171,15 +171,14 @@ func (s *Server) handleConnection(conn *BufConn) error {
 }
 
 func proxy(conn1, conn2 io.ReadWriter) {
-	wg := sync.WaitGroup{}
-	wg.Add(2)
+	done := make(chan struct{}, 1)
 
 	stream := func(c1, c2 io.ReadWriter) {
 		io.Copy(c1, c2)
-		wg.Done()
+		done <- struct{}{}
 	}
 	go stream(conn1, conn2)
 	go stream(conn2, conn1)
 
-	wg.Wait()
+	<-done
 }

@@ -146,6 +146,16 @@ func parseServerMessage(data []byte) (any, error) {
 		}
 	}
 
+	if conn, ok := hash["Connection"]; ok {
+		if conn, ok := conn.(string); ok {
+			id, err := uuid.Parse(conn)
+			if err != nil {
+				return nil, err
+			}
+			return ServerConnection{Connection: id}, nil
+		}
+	}
+
 	if challenge, ok := hash["Challenge"]; ok {
 		if challenge, ok := challenge.(string); ok {
 			id, err := uuid.Parse(challenge)
@@ -162,5 +172,5 @@ func parseServerMessage(data []byte) (any, error) {
 		}
 	}
 
-	return nil, fmt.Errorf("failed to parse client message: %s", string(data))
+	return nil, fmt.Errorf("failed to parse server message: %s", string(data))
 }
